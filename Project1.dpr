@@ -13,7 +13,6 @@ const usuarioAdmin: String = 'admin';
 procedure ExibirMenu(autenticado: Boolean); forward;
 function LoginValido(usuario, senha: String): Boolean; forward
 function RealizarLogin: Boolean; forward
-procedure ChamarOpcao(op: Integer; autenticado: Boolean); forward
 procedure LimparConsole; forward
 
 procedure LimparConsole;
@@ -80,10 +79,6 @@ begin
     end;
   end;
   Result := false;
-end;
-
-procedure ChamarOpcao(op: Integer; autenticado: Boolean);
-begin
 end;
 
 var temp: String;
