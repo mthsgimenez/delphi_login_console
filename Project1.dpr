@@ -14,6 +14,7 @@ procedure ExibirMenu(autenticado: Boolean); forward;
 function LoginValido(usuario, senha: String): Boolean; forward
 function RealizarLogin: Boolean; forward
 procedure LimparConsole; forward
+procedure CriarUsuario; forward
 
 procedure LimparConsole;
 var
@@ -81,6 +82,31 @@ begin
   Result := false;
 end;
 
+procedure CriarUsuario;
+var nome, email: String;
+var idade: Integer;
+var valido: Boolean;
+begin
+  valido := False;
+
+  Write('Digite o nome completo do usuário: ');
+  Readln(nome);
+  Write('Digite o email do usuário: ');
+  Readln(email);
+
+  while not valido do begin
+    try
+      Write('Digite a idade do usuário: ');
+      Readln(idade);
+      valido := True;
+    except
+      on e: EInOutError do begin
+        Writeln('A idade deve ser um número inteiro');
+      end;
+    end;
+  end;
+end;
+
 var temp: String;
 var op: Integer;
 var autenticado: Boolean = false;
@@ -103,7 +129,7 @@ begin
       if autenticado then begin
         case op of
           1: begin
-
+            CriarUsuario;
           end;
           8: begin
             autenticado := false;
@@ -112,21 +138,21 @@ begin
           9: begin
             Writeln('Encerrando...');
             Sleep(750);
-            Exit;
+            Halt;
           end;
           else Writeln('Opção inválida' + sLineBreak);
         end;
-
       end else begin
         case op of
           1: begin
             autenticado := RealizarLogin;
-            if not autenticado then Exit;
+            // Esgotou as tentativas
+            if not autenticado then Halt;
           end;
           9: begin
             Writeln('Encerrando...');
             Sleep(750);
-            Exit;
+            Halt;
           end;
           else Writeln('Opção inválida' + sLineBreak);
         end;
