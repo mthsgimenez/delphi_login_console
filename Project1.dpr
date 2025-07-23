@@ -36,16 +36,16 @@ end;
 procedure ExibirMenu(autenticado: Boolean);
 begin
   if autenticado then begin
-    Writeln('|------- Menu -------|');
-    Writeln('| 1 - Exibir segredo |');
-    Writeln('| 2 - Deslogar       |');
-    Writeln('| 9 - Sair           |');
-    Writeln('|--------------------|' + sLineBreak);
+    Writeln('|--------- Menu --------|');
+    Writeln('| 1 - Adicionar usuário |');
+    Writeln('| 8 - Deslogar          |');
+    Writeln('| 9 - Sair              |');
+    Writeln('|-----------------------|' + sLineBreak);
   end else begin
-    Writeln('|------- Menu -------|');
-    Writeln('| 1 - Realizar Login |');
-    Writeln('| 9 - Sair           |');
-    Writeln('|--------------------|' + sLineBreak);
+    Writeln('|--------- Menu --------|');
+    Writeln('| 1 - Realizar Login    |');
+    Writeln('| 9 - Sair              |');
+    Writeln('|-----------------------|' + sLineBreak);
   end;
 
   Write('Digite sua opção: ');
@@ -94,33 +94,42 @@ begin
         Readln(op);      
       except
         on e: EInOutError do begin
-          Writeln('Opção inválida' + sLineBreak);
+          Writeln('Digite um número!' + sLineBreak);
           Sleep(1000);
           continue;
         end;
       end;
 
-      case op of
-        1: begin
-          if autenticado then begin
-            writeln(sLineBreak + 'segredo: asjfh9ashf09ka329af02u9ae02ma' + sLineBreak);
-          end else begin
+      if autenticado then begin
+        case op of
+          1: begin
+
+          end;
+          8: begin
+            autenticado := false;
+            Writeln('Você foi desconectado' + sLineBreak);
+          end;
+          9: begin
+            Writeln('Encerrando...');
+            Sleep(750);
+            Exit;
+          end;
+          else Writeln('Opção inválida' + sLineBreak);
+        end;
+
+      end else begin
+        case op of
+          1: begin
             autenticado := RealizarLogin;
             if not autenticado then Exit;
           end;
+          9: begin
+            Writeln('Encerrando...');
+            Sleep(750);
+            Exit;
+          end;
+          else Writeln('Opção inválida' + sLineBreak);
         end;
-        2: begin
-          if autenticado then begin
-            autenticado := false;
-            Writeln('Você foi desconectado' + sLineBreak);
-          end else Writeln('Opção inválida' + sLineBreak);
-        end;
-        9: begin
-          Writeln('Encerrando...');
-          Sleep(750);
-          Exit;
-        end;
-        else Writeln('Opção inválida' + sLineBreak);
       end;
       Sleep(1000);
     end;
